@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, fireEvent, waitFor, within } from '@testing-library/react';
+import '@testing-library/jest-dom/vitest';
 import { LoginPage } from './login-page';
 
 const dispatchMock = vi.fn((action?: unknown) => {
@@ -21,8 +22,8 @@ vi.mock('../store/hooks', () => ({
     selector({ auth: { status: 'idle' } }),
 }));
 
-vi.mock('react-router-dom', async (original) => {
-  const actual = await original();
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
   return {
     ...actual,
     useNavigate: () => vi.fn(),
