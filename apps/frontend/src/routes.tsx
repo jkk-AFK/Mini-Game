@@ -9,24 +9,29 @@ import { GamePage } from './pages/game-page';
 import { AdminDashboardPage } from './pages/admin-dashboard-page';
 import { LobbyPage } from './pages/lobby-page';
 
-export const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <AppLayout />,
-    children: [
-      { index: true, element: <HomePage /> },
-      { path: 'games/:gameKey', element: <GamePage /> },
-      { path: 'profile', element: <ProfilePage /> },
-      { path: 'lobby', element: <LobbyPage /> },
-      { path: 'admin', element: <AdminDashboardPage /> },
-    ],
-  },
-  {
-    path: '/auth',
-    element: <AuthLayout />,
-    children: [
-      { path: 'login', element: <LoginPage /> },
-      { path: 'register', element: <RegisterPage /> },
-    ],
-  },
-]);
+const basename = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+
+export const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <AppLayout />,
+      children: [
+        { index: true, element: <HomePage /> },
+        { path: 'games/:gameKey', element: <GamePage /> },
+        { path: 'profile', element: <ProfilePage /> },
+        { path: 'lobby', element: <LobbyPage /> },
+        { path: 'admin', element: <AdminDashboardPage /> },
+      ],
+    },
+    {
+      path: '/auth',
+      element: <AuthLayout />,
+      children: [
+        { path: 'login', element: <LoginPage /> },
+        { path: 'register', element: <RegisterPage /> },
+      ],
+    },
+  ],
+  { basename },
+);
