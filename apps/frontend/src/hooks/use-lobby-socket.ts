@@ -54,7 +54,7 @@ export function useLobbySocket(): LobbyEvents {
     });
 
     socket.on('match_error', (payload: { message: string }) => {
-      dispatch(lobbyError(payload?.message ?? '匹配失败'));
+      dispatch(lobbyError(payload?.message ?? 'Match failed'));
       dispatch(queueCleared());
     });
 
@@ -74,7 +74,7 @@ export function useLobbySocket(): LobbyEvents {
   const requestMatch = useCallback(
     (gameKey: string, mode: 'single' | 'multi') => {
       if (!socketRef.current) {
-        dispatch(lobbyError('Lobby 连接尚未建立'));
+        dispatch(lobbyError('Lobby connection not ready'));
         return;
       }
       dispatch(queueStarted({ gameKey, mode }));

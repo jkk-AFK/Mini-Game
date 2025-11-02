@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { z } from 'zod';
 import passport from 'passport';
-import { loginUser, refreshToken, registerUser } from '../services/auth-service.js';
-import { HttpError } from '../middleware/error-handler.js';
+import { loginUser, refreshToken, registerUser, revokeRefreshToken } from '../services/auth-service.js';
 import { isFacebookOAuthEnabled, isGoogleOAuthEnabled } from '../config/passport.js';
+import { ensureAuthenticated, AuthRequest } from '../middleware/auth.js';
 
 interface OAuthPayload {
   tokens: { accessToken: string; refreshToken: string };
@@ -70,13 +70,19 @@ router.post('/refresh', async (req, res, next) => {
   }
 });
 
-router.post('/logout', (_req, res, next) => {
-  try {
-    res.json({ success: true });
-  } catch (error) {
-    next(new HttpError(500, 'Unable to logout', error));
-  }
-});
+router.post(
+  '/logout',
+  ensureAuthenticated,
+  async (req: AuthRequest, res, next) => {
+    try {
+      const input = refreshSchema.parse(req.body);
+      await revokeRefreshToken(input.refreshToken, req.user!.id);
+      res.json({ success: true });
+    } catch (error) {
+      next(error);
+    }
+  },
+);
 
 if (isGoogleOAuthEnabled()) {
   router.get(

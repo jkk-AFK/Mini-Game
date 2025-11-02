@@ -43,6 +43,13 @@ export const fetchProfile = createAsyncThunk('auth/profile', async () => {
   return response.data as UserProfile;
 });
 
+export const logoutRemote = createAsyncThunk('auth/logoutRemote', async (_, { getState }) => {
+  const state = getState() as { auth: AuthState };
+  const token = state.auth.refreshToken;
+  if (!token) return;
+  await api.post('/auth/logout', { refreshToken: token });
+});
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -92,6 +99,21 @@ const authSlice = createSlice({
       })
       .addCase(fetchProfile.fulfilled, (state, action) => {
         state.user = action.payload;
+      });
+    builder
+      .addCase(logoutRemote.fulfilled, (state) => {
+        state.user = null;
+        state.accessToken = undefined;
+        state.refreshToken = undefined;
+        state.status = 'idle';
+        clearApiTokens();
+      })
+      .addCase(logoutRemote.rejected, (state) => {
+        state.user = null;
+        state.accessToken = undefined;
+        state.refreshToken = undefined;
+        state.status = 'idle';
+        clearApiTokens();
       });
   },
 });

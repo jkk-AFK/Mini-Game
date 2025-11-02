@@ -1,0 +1,134 @@
+{
+  "app": {
+    "title": "Arcade Platform",
+    "nav": {
+      "home": "Home",
+      "profile": "Profile",
+      "lobby": "Lobby",
+      "admin": "Admin",
+      "signin": "Sign in",
+      "logout": "Sign out"
+    },
+    "footer": "© {{year}} Arcade Platform. All rights reserved."
+  },
+  "locales": {
+    "en": "English",
+    "zh-CN": "中文"
+  },
+  "home": {
+    "heading": "Choose your game",
+    "subheading": "Classic arcade titles with modern multiplayer capabilities."
+  },
+  "gameCard": {
+    "play": "Play now →"
+  },
+  "game": {
+    "notFound": "Game not found.",
+    "score": "Score",
+    "status": "Status",
+    "statusLabel": {
+      "idle": "Paused",
+      "running": "Running",
+      "finished": "Finished"
+    },
+    "controls": {
+      "title": "Controls",
+      "move": "Arrow Keys — Movement",
+      "jump": "Space — Jump (Mario)"
+    },
+    "multiplayer": {
+      "yourSymbol": "Your symbol",
+      "opponentTurn": "Opponent's turn",
+      "yourTurn": "Your turn",
+      "winner": "{{symbol}} wins!",
+      "draw": "It's a draw.",
+      "spectator": "Spectating match",
+      "error": "Error: {{message}}",
+      "backToLobby": "Back to lobby",
+    "chatPlaceholder": "Send a message",
+    "send": "Send",
+    "noChat": "No messages yet."
+  }
+  },
+  "controlBar": {
+    "start": "Start",
+    "resume": "Resume",
+    "pause": "Pause",
+    "restart": "Restart"
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "empty": "No scores yet."
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "email": "Email",
+    "password": "Password",
+    "signingIn": "Signing in…",
+    "withGoogle": "Sign in with Google",
+    "withFacebook": "Sign in with Facebook",
+    "or": "OR",
+    "registerTitle": "Create account",
+    "username": "Username",
+    "register": "Register"
+  },
+  "profile": {
+    "loading": "Loading profile…",
+    "welcome": "Welcome back, {{name}}",
+    "email": "Email",
+    "locale": "Locale",
+    "roles": "Roles",
+    "historyTitle": "Recent Games",
+    "historyEmpty": "No game history yet.",
+    "historyColumns": {
+      "game": "Game",
+      "score": "Score",
+      "mode": "Mode",
+      "time": "Played at"
+    },
+    "historyFilter": {
+      "all": "All games",
+      "single": "Single player",
+      "multi": "Multiplayer"
+    },
+    "loadMore": "Load more"
+  },
+  "lobby": {
+    "title": "Realtime Lobby",
+    "subtitle": "Match with other players instantly or jump to solo practice.",
+    "selectGame": "Select game",
+    "matchMode": "Match mode",
+    "join": "Join match",
+    "joinSolo": "Play solo",
+    "waiting": "Waiting for match…",
+    "cancel": "Cancel queue",
+    "status": "Connection status",
+    "connected": "Connected",
+    "connecting": "Connecting…",
+    "error": "Matchmaking error",
+    "matchSuccess": "Match found!",
+    "matchRoom": "Room ID",
+    "enterBattle": "Join battle",
+    "mode": {
+      "multi": "Multiplayer",
+      "single": "Solo practice"
+    }
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "users": "Users",
+    "scores": "Scores Logged",
+    "recent": "Recent Games",
+    "loading": "Loading metrics…",
+    "userList": "User Management",
+    "ban": "Ban",
+    "unban": "Unban",
+    "bannedUntil": "Banned until",
+    "actions": "Actions",
+    "audits": "Audit Logs",
+    "noAudits": "No audit entries."
+  },
+  "buttons": {
+    "signOut": "Sign out"
+  }
+}

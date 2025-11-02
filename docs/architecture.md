@@ -180,7 +180,7 @@ AuditLog {
 | POST | `/api/v1/auth/register` | 邮箱注册 | - |
 | POST | `/api/v1/auth/login` | 登录 | - |
 | POST | `/api/v1/auth/refresh` | 刷新 JWT | Refresh Token |
-| POST | `/api/v1/auth/logout` | 注销 | Access Token |
+| POST | `/api/v1/auth/logout` | 注销并吊销 Refresh Token | Access Token + Refresh Token |
 | GET  | `/api/v1/auth/google` | Google OAuth 引导 | - |
 | GET  | `/api/v1/auth/google/callback` | Google OAuth 回调 | - |
 | GET  | `/api/v1/auth/facebook` | Facebook OAuth 引导 | - |
@@ -190,6 +190,7 @@ AuditLog {
 | GET  | `/api/v1/games` | 列出游戏 | 可选 |
 | GET  | `/api/v1/games/:key/history` | 查询历史成绩 | Access Token |
 | POST | `/api/v1/scores/submit` | 上报成绩 | Access Token |
+| GET  | `/api/v1/scores/history` | 查询当前用户成绩历史，支持分页筛选 | Access Token |
 | GET  | `/api/v1/scores/leaderboard` | 排行榜 | 可选 |
 | GET  | `/api/v1/admin/users` | 管理用户 | Admin |
 | POST | `/api/v1/admin/actions/ban` | 封禁/解禁用户 | Admin |
@@ -210,6 +211,19 @@ AuditLog {
   - `input_event`（广播玩家操作）
   - `state_snapshot`（服务器回传 authoritative 状态）
   - `game_over`（统计结果）
+  - `chat_message`（玩家文本聊天）
+
+TicTacToe 作为多人 MVP，服务器维护 3x3 棋盘状态：
+
+```ts
+type TicTacToeState = {
+  board: Array<Array<'X' | 'O' | null>>;
+  current: 'X' | 'O';
+  winner?: 'X' | 'O' | 'draw';
+};
+```
+
+服务端根据 `input_event` 写入棋步，校验合法性，广播最新 `state_snapshot`，胜负后触发 `game_over`。后续可扩展至其它游戏共享同一事件格式。
 
 服务端需支持回放与重新连接：保留最近 N 帧状态，断线重连后同步。
 
@@ -236,6 +250,43 @@ AuditLog {
 1. 管理员登录后台，通过受限路由访问。
 2. 可执行用户封禁、查看违规举报、审查统计数据。
 3. 管理操作写入 `AuditLog`，供审计。
+
+### 6.4 国际化流程
+
+1. `AppLayout` 在初始化时挂载 `I18nextProvider`，加载打包内的 `en`、`zh-CN` 资源。
+2. 用户通过导航栏 `LocaleSwitcher` 切换语言，触发 Redux `preferences/setLocale`。
+3. Store 更新后调用 `/api/v1/users/me` PATCH 同步 `locale`。
+4. `react-i18next` 自动重渲页面文本，游戏控制条等组件读取翻译字符串。
+
+### 6.5 刷新令牌生命周期
+
+1. 注册/登录成功后，`issueTokens` 写入 `RefreshToken` 集合（哈希 + 过期时间）。
+2. 客户端保存 refresh token 于 HttpOnly Cookie，本地内存仅留 access token。
+3. `/auth/refresh` 先验证 token 哈希，再吊销旧 token 并发新 token（token rotation）。
+4. `/auth/logout` 将当前 refresh token 置为已吊销，防止继续使用。
+
+### 6.6 成绩与排行榜
+
+1. 游戏结束 → 前端调用 `/scores/submit` 写入结果。
+2. 个人档案请求 `/scores/history?gameKey=...&page=1&pageSize=10`。
+3. 返回数据结构：
+   ```json
+   {
+     "items": [{ "_id": "...", "gameKey": "tetris", "score": 1234, "mode": "single", "createdAt": "..." }],
+     "total": 42
+   }
+   ```
+4. 排行榜维持 `/scores/leaderboard` 顶部十名；后续可加分页或全局榜。
+
+### 6.7 大厅与房间增强
+
+1. `MatchmakingService` 匹配成功后向 `Lobby` namespace 广播 `match_found`（含 `matchId`）。
+2. 客户端跳转至 `/games/:gameKey?matchId=...`，在游戏页调用 `useGameRoomSocket`。
+3. 房间 namespace 负责：
+   - 分配玩家角色（TicTacToe：`X`/`O`）。
+   - 广播 `state_snapshot` 与 `chat_message`。
+   - 处理断线重连：基于 `MatchSession` 记录最近状态。
+4. 结束后写入成绩并 `room_update`，客户端提示返回大厅。
 
 ## 7. 架构质量门控
 

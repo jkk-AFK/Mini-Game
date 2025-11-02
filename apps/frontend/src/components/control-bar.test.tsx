@@ -2,6 +2,18 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import { ControlBar } from './control-bar';
 
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key: string) =>
+      ({
+        'controlBar.start': 'Start',
+        'controlBar.pause': 'Pause',
+        'controlBar.restart': 'Restart',
+        'controlBar.resume': 'Resume',
+      }[key] ?? key),
+  }),
+}));
+
 describe('ControlBar', () => {
   it('calls handlers when buttons clicked', () => {
     const onStart = vi.fn();

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { login, fetchProfile, setTokens } from '../features/auth/auth-slice';
 
@@ -14,6 +15,7 @@ export function LoginPage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const status = useAppSelector((state) => state.auth.status);
+  const { t } = useTranslation();
 
   const onSubmit = handleSubmit(async (data) => {
     await dispatch(login(data)).unwrap();
@@ -62,9 +64,9 @@ export function LoginPage() {
 
   return (
     <form className="flex flex-col gap-4" onSubmit={onSubmit}>
-      <h2 className="text-xl font-semibold text-slate-100">Sign in</h2>
+      <h2 className="text-xl font-semibold text-slate-100">{t('auth.signIn')}</h2>
       <label className="text-sm text-slate-300">
-        Email
+        {t('auth.email')}
         <input
           className="mt-1 w-full rounded border border-slate-700 bg-slate-900 px-3 py-2"
           type="email"
@@ -72,7 +74,7 @@ export function LoginPage() {
         />
       </label>
       <label className="text-sm text-slate-300">
-        Password
+        {t('auth.password')}
         <input
           className="mt-1 w-full rounded border border-slate-700 bg-slate-900 px-3 py-2"
           type="password"
@@ -84,10 +86,10 @@ export function LoginPage() {
         className="rounded bg-sky-500 py-2 font-semibold text-slate-900"
         disabled={status === 'loading'}
       >
-        {status === 'loading' ? 'Signing in…' : 'Sign in'}
+        {status === 'loading' ? t('auth.signingIn') : t('auth.signIn')}
       </button>
       <div className="relative my-4 flex items-center justify-center text-xs uppercase tracking-wide text-slate-600">
-        <span className="bg-slate-900 px-2">或</span>
+        <span className="bg-slate-900 px-2">{t('auth.or')}</span>
         <div className="absolute left-0 right-0 h-px bg-slate-800" />
       </div>
       <div className="flex flex-col gap-2">
@@ -96,14 +98,14 @@ export function LoginPage() {
           onClick={() => openOAuthWindow('google')}
           className="w-full rounded border border-slate-700 px-4 py-2 text-sm font-medium text-slate-200 hover:border-slate-500"
         >
-          使用 Google 登录
+          {t('auth.withGoogle')}
         </button>
         <button
           type="button"
           onClick={() => openOAuthWindow('facebook')}
           className="w-full rounded border border-slate-700 px-4 py-2 text-sm font-medium text-slate-200 hover:border-slate-500"
         >
-          使用 Facebook 登录
+          {t('auth.withFacebook')}
         </button>
       </div>
     </form>

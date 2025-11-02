@@ -1,0 +1,134 @@
+{
+  "app": {
+    "title": "街机平台",
+    "nav": {
+      "home": "首页",
+      "profile": "个人中心",
+      "lobby": "实时大厅",
+      "admin": "管理后台",
+      "signin": "登录",
+      "logout": "退出"
+    },
+    "footer": "© {{year}} 街机平台，保留所有权利。"
+  },
+  "locales": {
+    "en": "English",
+    "zh-CN": "中文"
+  },
+  "home": {
+    "heading": "选择你的游戏",
+    "subheading": "经典街机玩法，配备现代化多人对战能力。"
+  },
+  "gameCard": {
+    "play": "立即游玩 →"
+  },
+  "game": {
+    "notFound": "未找到该游戏。",
+    "score": "得分",
+    "status": "状态",
+    "statusLabel": {
+      "idle": "暂停中",
+      "running": "进行中",
+      "finished": "已结束"
+    },
+    "controls": {
+      "title": "操作说明",
+      "move": "方向键 — 移动",
+      "jump": "空格 — 跳跃（马里奥）"
+    },
+    "multiplayer": {
+      "yourSymbol": "你的棋子",
+      "opponentTurn": "轮到对手落子",
+      "yourTurn": "轮到你落子",
+      "winner": "{{symbol}} 获胜！",
+      "draw": "平局。",
+      "spectator": "观战中",
+      "error": "错误：{{message}}",
+      "backToLobby": "返回大厅",
+    "chatPlaceholder": "发送消息",
+    "send": "发送",
+    "noChat": "暂无消息"
+  }
+  },
+  "controlBar": {
+    "start": "开始",
+    "resume": "继续",
+    "pause": "暂停",
+    "restart": "重开"
+  },
+  "leaderboard": {
+    "title": "排行榜",
+    "empty": "暂无记录。"
+  },
+  "auth": {
+    "signIn": "登录",
+    "email": "邮箱",
+    "password": "密码",
+    "signingIn": "登录中…",
+    "withGoogle": "使用 Google 登录",
+    "withFacebook": "使用 Facebook 登录",
+    "or": "或",
+    "registerTitle": "创建账号",
+    "username": "用户名",
+    "register": "注册"
+  },
+  "profile": {
+    "loading": "正在加载个人信息…",
+    "welcome": "欢迎回来，{{name}}",
+    "email": "邮箱",
+    "locale": "语言",
+    "roles": "角色",
+    "historyTitle": "最近战绩",
+    "historyEmpty": "暂无游戏记录。",
+    "historyColumns": {
+      "game": "游戏",
+      "score": "得分",
+      "mode": "模式",
+      "time": "时间"
+    },
+    "historyFilter": {
+      "all": "全部游戏",
+      "single": "单人模式",
+      "multi": "多人模式"
+    },
+    "loadMore": "加载更多"
+  },
+  "lobby": {
+    "title": "实时大厅",
+    "subtitle": "与在线玩家即时匹配，或直接进入单人练习。",
+    "selectGame": "选择游戏",
+    "matchMode": "匹配模式",
+    "join": "加入匹配",
+    "joinSolo": "单人游玩",
+    "waiting": "等待匹配…",
+    "cancel": "取消排队",
+    "status": "连接状态",
+    "connected": "已连接",
+    "connecting": "连接中…",
+    "error": "匹配出错",
+    "matchSuccess": "匹配成功！",
+    "matchRoom": "房间编号",
+    "enterBattle": "进入对战",
+    "mode": {
+      "multi": "多人对战",
+      "single": "单人练习"
+    }
+  },
+  "admin": {
+    "title": "管理后台",
+    "users": "用户总数",
+    "scores": "成绩数量",
+    "recent": "最近对局",
+    "loading": "正在加载统计…",
+    "userList": "用户管理",
+    "ban": "封禁",
+    "unban": "解禁",
+    "bannedUntil": "封禁至",
+    "actions": "操作",
+    "audits": "审计日志",
+    "noAudits": "暂无审计记录。"
+  },
+  "buttons": {
+    "signOut": "退出登录"
+  }
+}

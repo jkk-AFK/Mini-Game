@@ -2,26 +2,27 @@
 
 ## 1. 验证结果
 
-- 后端健康检查 (`/health`)：通过 `npm run test:backend` 自动化测试验证。
-- 前端控件交互：通过 `npm run test:frontend` 验证控制栏交互逻辑。
-- 项目依赖安装：`npm install` 成功完成，工作区可在本地运行。
+- 后端自动化：`npm run test:backend` 覆盖健康检查、匹配队列以及新增的成绩历史分页逻辑。
+- 前端自动化：`npm run test:frontend` 验证控制栏与 Redux 切片行为，i18n mock 正常工作。
+- 手动抽测：邮箱登录→大厅匹配→井字棋多人对战→成绩写入排行榜→管理员后台封禁/解禁流程均已跑通。
+- 项目依赖安装：`npm install` 与双端 `npm run dev` 可启动，Socket.IO 命名空间监听正常。
 
 ## 2. 质量评估
 
-- **代码质量**：TypeScript 严格模式启用，ESLint/Prettier 配置就绪；核心模块添加注释解释关键流程。
-- **测试覆盖**：当前示例测试覆盖健康检查与关键 UI 控件；建议后续扩展至游戏逻辑和 WebSocket 流程。
-- **文档完整度**：`docs/architecture.md`、`docs/atomized_tasks.md`、`docs/approval_checklist.md`、`docs/development.md`、当前评估报告同步更新。
+- **代码质量**：新增 RefreshToken 模型、WebSocket 房间状态等核心逻辑均配套类型定义与错误处理；前端引入 i18n/偏好状态机，控制器交互注释清晰。
+- **测试覆盖**：补充成绩历史分页单测；前端 Vitest 通过 i18n mock 验证按钮交互。仍需后续为刷新令牌轮换、Socket 对局添加更高层级测试。
+- **文档完整度**：Stage 1-4 文档与架构、任务分解已更新；评估报告同步记录新的自动化结果与风险项。
 
 ## 3. 风险与后续工作
 
-- 多人对战目前仍为权威服构想，客户端尚未实现实际对战状态同步与房间管理 UI。
-- 游戏逻辑为演示质量，可进一步扩展关卡、AI 与多人共享状态。
-- Telemetry 依赖外部 OTLP Collector，部署时需配置实际 Endpoint 与告警链路。
-- OAuth 回调窗口通过 `postMessage` 下发凭证，前端需在生产环境配置允许的 `VITE_BACKEND_ORIGIN` 以避免安全隐患。
+- TicTacToe 已实现多人权威同步，其它游戏仍为单人运行，需评估扩展成本与一致性策略。
+- Refresh Token 存储采用 MongoDB，尚未引入 Redis 黑名单/速率限制，需在生产前补齐安全防护。
+- Telemetry 依赖外部 OTLP Collector，部署时需配置实际 Endpoint 与指标告警链路。
+- i18n 文案目前覆盖核心界面，后续新增页面需同步补充翻译并保持审校流程。
 
 ## 4. TODO 汇总
 
-1. 实装多人游戏状态同步与房间管理界面，完善 `/ws/game/:matchId` 通讯。
-2. 为游戏 runtime 与 Socket hook 编写更多单元测试 / E2E 测试。
-3. 接入生产级监控（OTLP Collector、Grafana Dashboard）并设置预警阈值。
-4. 在 OAuth 成功后，提供 token 安全存储及过期刷新策略说明文档。
+1. 将多人权威同步扩展至其它游戏模块，补齐观战与断线重连策略。
+2. 为刷新令牌轮换、安全异常、Socket 对局流程编写集成测试与 E2E 脚本。
+3. 接入生产级监控（OTLP Collector、Grafana Dashboard）并设置预警阈值与速率限制。
+4. 完善 i18n/偏好状态持久化与产品文案流程，沉淀后台操作及 OAuth 风险提示文档。

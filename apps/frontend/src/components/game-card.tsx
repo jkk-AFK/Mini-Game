@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import type { GameInfo } from '../features/games/games-slice';
 
 interface Props {
@@ -6,6 +7,7 @@ interface Props {
 }
 
 export function GameCard({ game }: Props) {
+  const { t } = useTranslation();
   const description =
     typeof game.metadata?.description === 'string' ? game.metadata.description : '';
   return (
@@ -20,7 +22,7 @@ export function GameCard({ game }: Props) {
         <p className="mt-2 text-xs uppercase tracking-wide text-slate-400">{game.genre}</p>
         {description && <p className="mt-3 text-sm text-slate-400">{description}</p>}
       </div>
-      <div className="mt-4 text-right text-xs text-slate-400">Play now →</div>
+      <div className="mt-4 text-right text-xs text-slate-400">{t('gameCard.play')}</div>
     </Link>
   );
 }

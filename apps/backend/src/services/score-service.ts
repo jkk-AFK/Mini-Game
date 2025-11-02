@@ -38,3 +38,32 @@ export async function getUserHistory(userId: string, gameKey?: string) {
   const query = gameKey ? { userId, gameKey } : { userId };
   return ScoreRecordModel.find(query).sort({ createdAt: -1 });
 }
+
+interface HistoryQueryOptions {
+  gameKey?: string;
+  mode?: 'single' | 'multi';
+  page: number;
+  pageSize: number;
+}
+
+export async function getUserHistoryPaginated(userId: string, options: HistoryQueryOptions) {
+  const { gameKey, mode, page, pageSize } = options;
+  const query: Record<string, unknown> = { userId };
+  if (gameKey) {
+    query.gameKey = gameKey;
+  }
+  if (mode) {
+    query.mode = mode;
+  }
+  const skip = (page - 1) * pageSize;
+  const [items, total] = await Promise.all([
+    ScoreRecordModel.find(query).sort({ createdAt: -1 }).skip(skip).limit(pageSize),
+    ScoreRecordModel.countDocuments(query),
+  ]);
+  return {
+    items,
+    total,
+    page,
+    pageSize,
+  };
+}

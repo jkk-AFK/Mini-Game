@@ -26,6 +26,11 @@
 | T20 | 实时大厅前端 | Socket.IO 客户端、匹配队列、实时状态提示 | 多客户端联调成功 |
 | T21 | CI/CD 流水线 | GitHub Actions 流程、缓存、矩阵测试 | PR 自动运行 lint/test/build |
 | T22 | 观测与告警 | OpenTelemetry 导出、Prometheus 指标、健康探针 | 指标可被外部采集系统抓取 |
+| T23 | 刷新令牌与登出 | RefreshToken 模型、token rotation、logout 吊销接口 | 登出后 refresh token 不可再使用 |
+| T24 | 成绩历史 API & 档案页 | `/scores/history` 接口、分页筛选、Profile 历史列表 | 档案页展示分页数据 |
+| T25 | 国际化与语言切换 | i18next 配置、LocaleSwitcher、翻译资源 | UI 支持中英切换并持久化 |
+| T26 | TicTacToe 多人房间 | `/ws/game/:matchId` 状态同步、房间生命周期、成绩上报 | 多客户端对战 + 状态同步成功 |
+| T27 | 管理后台强化 | Admin 路由守卫、用户列表、封禁操作、审计展示 | 管理员可管理用户并查看审计 |
 
 ## 2. 依赖关系（Mermaid）
 
@@ -79,6 +84,17 @@ graph TD
   T2 --> T21
   T3 --> T21
   T5 --> T22
+  T4 --> T23
+  T23 --> T5
+  T5 --> T24
+  T24 --> T27
+  T8 --> T25
+  T4 --> T25
+  T6 --> T26
+  T11 --> T26
+  T12 --> T26
+  T6 --> T27
+  T4 --> T27
 ```
 
 ## 3. 质量审核
