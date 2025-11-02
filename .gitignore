@@ -1,0 +1,14 @@
+node_modules
+.env
+.env.*
+dist
+build
+coverage
+.DS_Store
+npm-debug.log
+.tmp
+.vscode
+.idea
+apps/frontend/.vite
+apps/backend/dist
+apps/frontend/dist

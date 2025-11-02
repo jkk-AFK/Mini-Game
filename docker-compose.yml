@@ -1,0 +1,35 @@
+version: '3.9'
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+  backend:
+    build:
+      context: ./apps/backend
+      dockerfile: Dockerfile
+    env_file:
+      - ./apps/backend/.env.example
+    depends_on:
+      - mongo
+      - redis
+    ports:
+      - '4000:4000'
+  frontend:
+    build:
+      context: ./apps/frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - '5173:5173'
+volumes:
+  mongo-data:
