@@ -5,7 +5,11 @@
     "jsx": "react-jsx",
     "allowJs": false,
     "types": ["vite/client"],
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "paths": {
+      "@shared/*": ["../../../packages/shared/src/*"],
+      "@game-engine/*": ["../../../packages/game-engine/src/*"]
+    }
   },
   "include": ["src"],
   "exclude": ["dist", "node_modules"]
