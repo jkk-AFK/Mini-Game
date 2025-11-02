@@ -65,12 +65,15 @@
     "email": "邮箱",
     "password": "密码",
     "signingIn": "登录中…",
+    "signingUp": "注册中…",
     "withGoogle": "使用 Google 登录",
     "withFacebook": "使用 Facebook 登录",
     "or": "或",
     "registerTitle": "创建账号",
     "username": "用户名",
-    "register": "注册"
+    "register": "注册",
+    "needAccount": "还没有账号？",
+    "haveAccount": "已经有账号？"
   },
   "profile": {
     "loading": "正在加载个人信息…",

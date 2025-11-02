@@ -65,12 +65,15 @@
     "email": "Email",
     "password": "Password",
     "signingIn": "Signing in…",
+    "signingUp": "Creating account…",
     "withGoogle": "Sign in with Google",
     "withFacebook": "Sign in with Facebook",
     "or": "OR",
     "registerTitle": "Create account",
     "username": "Username",
-    "register": "Register"
+    "register": "Register",
+    "needAccount": "Need an account?",
+    "haveAccount": "Already have an account?"
   },
   "profile": {
     "loading": "Loading profile…",
